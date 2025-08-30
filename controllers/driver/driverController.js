@@ -257,8 +257,25 @@ const getRideById = async (req, res) => {
       return res.status(404).json({ msg: "Ride not found" });
     }
     
-    console.log(`✅ Ride found: ${ride.RAID_ID}`);
-    res.json(ride);
+    // Log the ride object to see what's being returned
+    console.log("Ride object being returned:", ride);
+    
+    // Explicitly return the ride with all fields
+    res.json({
+      _id: ride._id,
+      RAID_ID: ride.RAID_ID, // Ensure this is included
+      customerId: ride.customerId,
+      name: ride.name,
+      pickupLocation: ride.pickupLocation,
+      dropoffLocation: ride.dropoffLocation,
+      pickupCoordinates: ride.pickupCoordinates,
+      dropoffCoordinates: ride.dropoffCoordinates,
+      fare: ride.fare,
+      distance: ride.distance,
+      status: ride.status,
+      user: ride.user,
+      driver: ride.driver
+    });
   } catch (err) {
     console.error("❌ Error in getRideById:", err);
     res.status(500).json({ error: err.message });
