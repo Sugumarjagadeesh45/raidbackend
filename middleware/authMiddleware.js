@@ -10,15 +10,12 @@ const authMiddleware = (req, res, next) => {
     if (!authHeader) {
       return res.status(401).json({ msg: "No token, authorization denied" });
     }
-
-    const token = authHeader.split(" ")[1]; // "Bearer <token>"
+    const token = authHeader.split(" ")[1];
     if (!token) {
       return res.status(401).json({ msg: "No token provided" });
     }
-
-    // Verify token
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // attach user info (driverId, role etc.)
+    req.user = decoded;
     next();
   } catch (err) {
     return res.status(403).json({ msg: "Invalid or expired token" });
