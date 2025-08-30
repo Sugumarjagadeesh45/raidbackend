@@ -8,7 +8,12 @@ const app = express();
 // Enable CORS
 app.use(
   cors({
-    origin: ["http://localhost:3000", 'http://192.168.1.107:3000'],
+   origin: [
+      'http://localhost:3000',
+      'http://192.168.1.107:3000',
+      'http://10.0.2.2:5000',
+      'https://raidbackend.onrender.com',
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
