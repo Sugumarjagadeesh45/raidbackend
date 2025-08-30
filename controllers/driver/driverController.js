@@ -242,13 +242,22 @@ const logoutDriver = async (req, res) => {
 };
 
 // Get ride by ID (protected route)
+// In driverController.js
 const getRideById = async (req, res) => {
   try {
     const { rideId } = req.params;
-    const ride = await Ride.findOne({ RAID_ID: rideId }).populate("user");
+    console.log(`🔍 Fetching ride with RAID_ID: ${rideId}`);
+    
+    const ride = await Ride.findOne({ RAID_ID: rideId })
+      .populate("user", "name customerId phone")
+      .populate("driver", "driverId name phone vehicleType");
+      
     if (!ride) {
+      console.log(`❌ Ride not found with RAID_ID: ${rideId}`);
       return res.status(404).json({ msg: "Ride not found" });
     }
+    
+    console.log(`✅ Ride found: ${ride.RAID_ID}`);
     res.json(ride);
   } catch (err) {
     console.error("❌ Error in getRideById:", err);
